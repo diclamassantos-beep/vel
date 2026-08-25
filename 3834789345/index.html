@@ -2,9 +2,10 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VerificaÃ§Ã£o de SeguranÃ§a & Acesso Seguro</title>
-  <meta name="description" content="Portal seguro de verificaÃ§Ã£o de identidade e consulta informativa em conformidade com a LGPD e polÃ­ticas de seguranÃ§a digital.">
+  <title>Verifica&ccedil;&atilde;o de Seguran&ccedil;a &amp; Acesso Seguro</title>
+  <meta name="description" content="Portal seguro de verifica&ccedil;&atilde;o de identidade e consulta informativa em conformidade com a LGPD e pol&iacute;ticas de seguran&ccedil;a digital.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -319,10 +320,10 @@
   <div class="top-security-bar">
     <div class="security-badge">
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-      <span>Ambiente Protegido & Criptografia SSL 256-Bit</span>
+      <span>Ambiente Protegido &amp; Criptografia SSL 256-Bit</span>
     </div>
-    <span>â€¢</span>
-    <span>Conformidade com a LGPD (Lei nÂº 13.709/2018)</span>
+    <span>&bull;</span>
+    <span>Conformidade com a LGPD (Lei n&ordm; 13.709/2018)</span>
   </div>
 
   <!-- Presell Card -->
@@ -331,14 +332,14 @@
       <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
     </div>
 
-    <h1 class="presell-title">VerificaÃ§Ã£o de Identidade</h1>
-    <p class="presell-subtitle">Para sua seguranÃ§a e conformidade cadastral, valide seus dados antes de prosseguir para a consulta.</p>
+    <h1 class="presell-title">Verifica&ccedil;&atilde;o de Identidade</h1>
+    <p class="presell-subtitle">Para sua seguran&ccedil;a e conformidade cadastral, valide seus dados antes de prosseguir para a consulta.</p>
 
     <!-- Campo Nome -->
     <div class="form-group">
       <label class="form-label" for="userNameInput">Nome Completo</label>
       <input type="text" id="userNameInput" class="form-input" placeholder="Digite seu nome completo" autocomplete="name" required>
-      <div class="error-hint" id="nameError">Por favor, informe seu nome completo para validaÃ§Ã£o.</div>
+      <div class="error-hint" id="nameError">Por favor, informe seu nome completo para valida&ccedil;&atilde;o.</div>
     </div>
 
     <!-- BotÃ£o / Caixa de Humano -->
@@ -350,8 +351,8 @@
         <span class="human-check-text" id="humanText">Sou humano / Confirmar identidade</span>
       </div>
       <div class="human-check-right">
-        <span class="captcha-logo">SeguranÃ§a</span>
-        <span class="captcha-sub">Privacidade & LGPD</span>
+        <span class="captcha-logo">Seguran&ccedil;a</span>
+        <span class="captcha-sub">Privacidade &amp; LGPD</span>
       </div>
     </div>
 
@@ -363,20 +364,20 @@
 
     <!-- Aviso LGPD -->
     <div class="lgpd-notice">
-      ðŸ”’ <strong>SeguranÃ§a e Privacidade:</strong> O tratamento de dados Ã© realizado de forma estritamente confidencial e segura, em plena conformidade com a Lei Geral de ProteÃ§Ã£o de Dados Pessoais (LGPD).
+      &#128274; <strong>Seguran&ccedil;a e Privacidade:</strong> O tratamento de dados &eacute; realizado de forma estritamente confidencial e segura, em plena conformidade com a Lei Geral de Prote&ccedil;&atilde;o de Dados Pessoais (LGPD).
     </div>
 
     <!-- RodapÃ© Institucional -->
     <div class="footer-info">
       <div class="footer-links">
-        <a href="../politica-de-privacidade.html">PolÃ­tica de Privacidade</a>
-        <span>â€¢</span>
+        <a href="../politica-de-privacidade.html">Pol&iacute;tica de Privacidade</a>
+        <span>&bull;</span>
         <a href="../termos-de-uso.html">Termos de Uso</a>
-        <span>â€¢</span>
-        <a href="https://transparencyreport.google.com/" target="_blank" rel="nofollow">SeguranÃ§a Digital</a>
+        <span>&bull;</span>
+        <a href="https://transparencyreport.google.com/" target="_blank" rel="nofollow">Seguran&ccedil;a Digital</a>
       </div>
       <div class="company-tag">
-        RazÃ£o Social: 68.733.527 Thabata Figueiredo dos Santos | CNPJ: 68.733.527/0001-69<br>
+        Raz&atilde;o Social: 68.733.527 Thabata Figueiredo dos Santos | CNPJ: 68.733.527/0001-69<br>
         Av. Decio Nunes Coelho, 747 - Governador Valadares / MG
       </div>
     </div>
@@ -434,14 +435,13 @@
 
         localStorage.setItem('userName', nome);
 
-        // Se ainda nao tinha marcado o box, marca automaticamente
         if (!isVerified) {
           isVerified = true;
           humanCheck.classList.add('checked');
           humanText.textContent = 'Identidade confirmada com sucesso';
         }
 
-        btnCta.innerHTML = '<span>Redirecionando com seguranÃ§a...</span>';
+        btnCta.innerHTML = '<span>Redirecionando com seguran&ccedil;a...</span>';
       });
 
       nameInput.addEventListener('input', function () {
