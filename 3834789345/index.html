@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VerificaÃ§Ã£o de SeguranÃ§a & Acesso Seguro</title>
+  <meta name="description" content="Portal seguro de verificaÃ§Ã£o de identidade e consulta informativa em conformidade com a LGPD e polÃ­ticas de seguranÃ§a digital.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      line-height: 1.5;
+    }
+
+    .top-security-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      z-index: 100;
+      text-align: center;
+    }
+
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #059669;
+      font-weight: 600;
+    }
+
+    .security-badge svg {
+      width: 16px;
+      height: 16px;
+      fill: #059669;
+    }
+
+    .presell-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 16px;
+      padding: 36px 28px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e2e8f0;
+      margin-top: 50px;
+      margin-bottom: 24px;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon-header {
+      width: 64px;
+      height: 64px;
+      background: #fdf2f8;
+      border: 1px solid #fbcfe8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: #e11d48;
+    }
+
+    .icon-header svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
+    }
+
+    .presell-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .presell-subtitle {
+      font-size: 14px;
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 50px;
+      padding: 0 16px;
+      font-size: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      outline: none;
+      background-color: #f8fafc;
+      color: #0f172a;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      background-color: #ffffff;
+      border-color: #e11d48;
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
+    }
+
+    /* Human Verification Box */
+    .human-check-card {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+
+    .human-check-card:hover {
+      border-color: #cbd5e1;
+      background-color: #f1f5f9;
+    }
+
+    .human-check-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .custom-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #94a3b8;
+      border-radius: 6px;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .human-check-card.checked .custom-checkbox {
+      background-color: #059669;
+      border-color: #059669;
+    }
+
+    .custom-checkbox svg {
+      width: 16px;
+      height: 16px;
+      fill: #ffffff;
+      display: none;
+    }
+
+    .human-check-card.checked .custom-checkbox svg {
+      display: block;
+    }
+
+    .human-check-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e293b;
+    }
+
+    .human-check-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .captcha-logo {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .captcha-sub {
+      font-size: 9px;
+      color: #94a3b8;
+    }
+
+    /* CTA Button */
+    .btn-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .btn-cta:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(225, 29, 72, 0.35);
+    }
+
+    .btn-cta:disabled {
+      background: #cbd5e1;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .error-hint {
+      color: #e11d48;
+      font-size: 12px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .error-hint.show {
+      display: block;
+    }
+
+    /* Disclaimer & Info */
+    .lgpd-notice {
+      background-color: #f8fafc;
+      border-left: 3px solid #059669;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-top: 22px;
+      font-size: 12px;
+      color: #475569;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .footer-info {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .footer-links a {
+      color: #64748b;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #e11d48;
+      text-decoration: underline;
+    }
+
+    .company-tag {
+      margin-top: 14px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Security Bar -->
+  <div class="top-security-bar">
+    <div class="security-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+      <span>Ambiente Protegido & Criptografia SSL 256-Bit</span>
+    </div>
+    <span>â€¢</span>
+    <span>Conformidade com a LGPD (Lei nÂº 13.709/2018)</span>
+  </div>
+
+  <!-- Presell Card -->
+  <main class="presell-card">
+    <div class="icon-header">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    </div>
+
+    <h1 class="presell-title">VerificaÃ§Ã£o de Identidade</h1>
+    <p class="presell-subtitle">Para sua seguranÃ§a e conformidade cadastral, valide seus dados antes de prosseguir para a consulta.</p>
+
+    <!-- Campo Nome -->
+    <div class="form-group">
+      <label class="form-label" for="userNameInput">Nome Completo</label>
+      <input type="text" id="userNameInput" class="form-input" placeholder="Digite seu nome completo" autocomplete="name" required>
+      <div class="error-hint" id="nameError">Por favor, informe seu nome completo para validaÃ§Ã£o.</div>
+    </div>
+
+    <!-- BotÃ£o / Caixa de Humano -->
+    <div class="human-check-card" id="humanCheck">
+      <div class="human-check-left">
+        <div class="custom-checkbox" id="checkboxIcon">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <span class="human-check-text" id="humanText">Sou humano / Confirmar identidade</span>
+      </div>
+      <div class="human-check-right">
+        <span class="captcha-logo">SeguranÃ§a</span>
+        <span class="captcha-sub">Privacidade & LGPD</span>
+      </div>
+    </div>
+
+    <!-- BotÃ£o de AÃ§Ã£o / href para /cpf -->
+    <a href="../cpf/" id="btnCta" class="btn-cta">
+      <span>Acessar Consulta Segura</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/></svg>
+    </a>
+
+    <!-- Aviso LGPD -->
+    <div class="lgpd-notice">
+      ðŸ”’ <strong>SeguranÃ§a e Privacidade:</strong> O tratamento de dados Ã© realizado de forma estritamente confidencial e segura, em plena conformidade com a Lei Geral de ProteÃ§Ã£o de Dados Pessoais (LGPD).
+    </div>
+
+    <!-- RodapÃ© Institucional -->
+    <div class="footer-info">
+      <div class="footer-links">
+        <a href="../politica-de-privacidade.html">PolÃ­tica de Privacidade</a>
+        <span>â€¢</span>
+        <a href="../termos-de-uso.html">Termos de Uso</a>
+        <span>â€¢</span>
+        <a href="https://transparencyreport.google.com/" target="_blank" rel="nofollow">SeguranÃ§a Digital</a>
+      </div>
+      <div class="company-tag">
+        RazÃ£o Social: 68.733.527 Thabata Figueiredo dos Santos | CNPJ: 68.733.527/0001-69<br>
+        Av. Decio Nunes Coelho, 747 - Governador Valadares / MG
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const nameInput = document.getElementById('userNameInput');
+      const humanCheck = document.getElementById('humanCheck');
+      const humanText = document.getElementById('humanText');
+      const btnCta = document.getElementById('btnCta');
+      const nameError = document.getElementById('nameError');
+      let isVerified = false;
+
+      // Recuperar nome do localStorage se ja existir
+      const savedName = localStorage.getItem('userName');
+      if (savedName) {
+        nameInput.value = savedName;
+      }
+
+      // Validar clique no botao de verificacao humana
+      humanCheck.addEventListener('click', function () {
+        const nome = nameInput.value.trim();
+        if (nome.length < 3) {
+          nameError.classList.add('show');
+          nameInput.focus();
+          return;
+        }
+        nameError.classList.remove('show');
+
+        isVerified = !isVerified;
+        if (isVerified) {
+          humanCheck.classList.add('checked');
+          humanText.textContent = 'Identidade confirmada com sucesso';
+          localStorage.setItem('userName', nome);
+        } else {
+          humanCheck.classList.remove('checked');
+          humanText.textContent = 'Sou humano / Confirmar identidade';
+        }
+      });
+
+      // Atualizar o href preservando os parametros UTM / query strings
+      const currentQuery = window.location.search || '';
+      btnCta.setAttribute('href', '../cpf/' + currentQuery);
+
+      // Tratar o clique no CTA
+      btnCta.addEventListener('click', function (e) {
+        const nome = nameInput.value.trim();
+        if (nome.length < 3) {
+          e.preventDefault();
+          nameError.classList.add('show');
+          nameInput.focus();
+          return;
+        }
+
+        localStorage.setItem('userName', nome);
+
+        // Se ainda nao tinha marcado o box, marca automaticamente
+        if (!isVerified) {
+          isVerified = true;
+          humanCheck.classList.add('checked');
+          humanText.textContent = 'Identidade confirmada com sucesso';
+        }
+
+        btnCta.innerHTML = '<span>Redirecionando com seguranÃ§a...</span>';
+      });
+
+      nameInput.addEventListener('input', function () {
+        if (nameInput.value.trim().length >= 3) {
+          nameError.classList.remove('show');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
