@@ -109,17 +109,17 @@
     .presell-subtitle {
       font-size: 14px;
       color: #64748b;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
       line-height: 1.6;
     }
 
-    /* Captcha Box - Estilo Moderno / Cloudflare & reCAPTCHA */
+    /* Captcha Box - Estilo Moderno */
     .captcha-container {
       background-color: #fafafa;
       border: 1px solid #dcdcdc;
       border-radius: 12px;
       padding: 16px 20px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -177,7 +177,6 @@
       100% { transform: scale(1); }
     }
 
-    /* Spinner Loader */
     .captcha-spinner {
       display: none;
       width: 18px;
@@ -231,6 +230,44 @@
       color: #94a3b8;
     }
 
+    /* Campo Nome */
+    .name-container {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .name-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .name-input {
+      width: 100%;
+      height: 52px;
+      padding: 0 16px;
+      font-size: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      outline: none;
+      background-color: #fafafa;
+      color: #0f172a;
+      transition: all 0.2s ease;
+    }
+
+    .name-input:focus {
+      background-color: #ffffff;
+      border-color: #e11d48;
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
+    }
+
+    .name-input.error {
+      border-color: #e11d48;
+      background-color: #fff5f5;
+    }
+
     /* CTA Button */
     .btn-cta {
       display: flex;
@@ -248,14 +285,12 @@
       border: none;
       cursor: not-allowed;
       transition: all 0.3s ease;
-      pointer-events: none;
-      opacity: 0.65;
+      opacity: 0.7;
     }
 
     .btn-cta.active {
       background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
       cursor: pointer;
-      pointer-events: auto;
       opacity: 1;
       box-shadow: 0 4px 14px rgba(225, 29, 72, 0.3);
       animation: pulseBtn 2s infinite;
@@ -271,7 +306,7 @@
       transform: translateY(-1px);
     }
 
-    .captcha-hint {
+    .validation-hint {
       color: #e11d48;
       font-size: 12px;
       margin-top: 10px;
@@ -279,7 +314,7 @@
       text-align: center;
     }
 
-    .captcha-hint.show {
+    .validation-hint.show {
       display: block;
       animation: shake 0.3s ease;
     }
@@ -353,9 +388,9 @@
     </div>
 
     <h1 class="presell-title">Verifica&ccedil;&atilde;o de Seguran&ccedil;a</h1>
-    <p class="presell-subtitle">Realize a verifica&ccedil;&atilde;o anti-bot abaixo para validar seu acesso &agrave; consulta informativa segura.</p>
+    <p class="presell-subtitle">Realize a verifica&ccedil;&atilde;o anti-bot e informe seu nome abaixo para acessar a consulta segura.</p>
 
-    <!-- Interactive Captcha Box -->
+    <!-- 1. Captcha Box -->
     <div class="captcha-container" id="captchaCard">
       <div class="captcha-left">
         <div class="captcha-box" id="captchaBox">
@@ -373,9 +408,15 @@
       </div>
     </div>
 
-    <div class="captcha-hint" id="captchaHint">Por favor, marque o captcha acima para liberar a consulta.</div>
+    <!-- 2. Campo Qual seu nome -->
+    <div class="name-container">
+      <label class="name-label" for="userNameInput">Qual seu nome?</label>
+      <input type="text" id="userNameInput" class="name-input" placeholder="Digite seu nome" autocomplete="name">
+    </div>
 
-    <!-- BotÃ£o de AÃ§Ã£o (Liberado apenas apÃ³s o Captcha) -->
+    <div class="validation-hint" id="validationHint"></div>
+
+    <!-- 3. BotÃ£o de AÃ§Ã£o -->
     <a href="../cpf/" id="btnCta" class="btn-cta">
       <span>Acessar Consulta Segura</span>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/></svg>
@@ -406,26 +447,43 @@
     (function () {
       const captchaCard = document.getElementById('captchaCard');
       const captchaText = document.getElementById('captchaText');
+      const nameInput = document.getElementById('userNameInput');
       const btnCta = document.getElementById('btnCta');
-      const captchaHint = document.getElementById('captchaHint');
+      const validationHint = document.getElementById('validationHint');
 
       let isVerified = false;
       let isLoading = false;
 
+      // Recuperar nome do localStorage se existir
+      const savedName = localStorage.getItem('userName');
+      if (savedName) {
+        nameInput.value = savedName;
+      }
+
       // Preservar parametros UTM e Query Strings no href
       const currentQuery = window.location.search || '';
       btnCta.setAttribute('href', '../cpf/' + currentQuery);
+
+      function checkFormState() {
+        const nome = nameInput.value.trim();
+        if (isVerified && nome.length >= 2) {
+          btnCta.classList.add('active');
+          validationHint.classList.remove('show');
+          nameInput.classList.remove('error');
+        } else {
+          btnCta.classList.remove('active');
+        }
+      }
 
       // Clique no Captcha Card
       captchaCard.addEventListener('click', function () {
         if (isVerified || isLoading) return;
 
         isLoading = true;
-        captchaHint.classList.remove('show');
+        validationHint.classList.remove('show');
         captchaCard.classList.add('loading');
         captchaText.textContent = 'Verificando seguran\u00E7a...';
 
-        // Simula tempo de autenticaÃ§Ã£o anti-bot (700ms)
         setTimeout(function () {
           isLoading = false;
           isVerified = true;
@@ -433,20 +491,47 @@
           captchaCard.classList.add('verified');
           captchaText.textContent = 'Voc\u00EA \u00E9 humano';
 
-          // Habilita o botao de acao
-          btnCta.classList.add('active');
-        }, 750);
+          checkFormState();
+          if (nameInput.value.trim().length < 2) {
+            nameInput.focus();
+          }
+        }, 700);
       });
 
-      // Clique no Botao CTA
+      // DigitaÃ§Ã£o do Nome
+      nameInput.addEventListener('input', function () {
+        checkFormState();
+      });
+
+      // Clique no BotÃ£o CTA
       btnCta.addEventListener('click', function (e) {
+        const nome = nameInput.value.trim();
+
         if (!isVerified) {
           e.preventDefault();
-          captchaHint.classList.add('show');
+          validationHint.textContent = 'Por favor, marque a op\u00E7\u00E3o "N\u00E3o sou um rob\u00F4".';
+          validationHint.classList.add('show');
           return;
         }
 
+        if (nome.length < 2) {
+          e.preventDefault();
+          nameInput.classList.add('error');
+          nameInput.focus();
+          validationHint.textContent = 'Por favor, digite seu nome para prosseguir.';
+          validationHint.classList.add('show');
+          return;
+        }
+
+        localStorage.setItem('userName', nome);
         btnCta.innerHTML = '<span>Redirecionando com seguran&ccedil;a...</span>';
+      });
+
+      // Enter no input
+      nameInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          btnCta.click();
+        }
       });
     })();
   </script>
